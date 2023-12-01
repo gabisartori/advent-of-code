@@ -15,7 +15,6 @@ def first(filename):
 
 def second(filename):
     total = 0
-    digits = [chr(i) for i in range(48, 58)] + ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
     numbers = {
         "zero": "0", "0": "0",
         "one": "1", "1": "1",
@@ -30,11 +29,11 @@ def second(filename):
     }
     with open(filename) as file:
         while line:=file.readline():
-            strings = [[line[start:start+size] for size in (1, 3, 4, 5)] for start in range(len(line))]
+            strings = [[line[start:start+size] for size in [len(number) for number in numbers]] for start in range(len(line))]
             # Find first number
             for start_pos in strings:
                 for attempt in start_pos:
-                    if attempt in digits:
+                    if attempt in numbers:
                         first = attempt
                         break
                 else: continue
@@ -43,7 +42,7 @@ def second(filename):
             # Find last number
             for start_pos in strings[::-1]:
                 for attempt in start_pos:
-                    if attempt in digits:
+                    if attempt in numbers:
                         last = attempt
                         break
                 else: continue
